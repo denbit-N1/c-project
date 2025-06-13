@@ -1,37 +1,46 @@
 #include<stdio.h>
 int check_win(char arr[3][3], char symbol, char *name)
 {
-    int rowcount=0, colcount= 0, diacount=0, dia2count=0;
-    for (int i = 0; i < 3; i++)
+    int rowcount=0,colcount=0,diacount=0,dia2count=0,i,j;
+
+    for ( i = 0; i < 3; i++)
     {
         rowcount=0;
         colcount=0;
-        for (int j = 0; j < 3; j++)
+        for ( j = 0; j < 3; j++)
         {
             if (arr[i][j]==symbol)
+            {
                 rowcount++;
-            if (arr[j][i]==symbol)
-                colcount++;
-            if (i==j)
-            {
-                if (arr[i][j]==symbol)
-                    diacount++;
             }
-            if (i==2-j)
+            if (arr[j][i]==symbol)
             {
-                if (arr[i][j]==symbol)
-                    dia2count++;
+                colcount++;
             }
         }
-        if (rowcount ==3 || colcount ==3 || diacount ==3 || dia2count ==3)
+        if (rowcount == 3 || colcount == 3)
         {
-            printf("%s win this Game",name);
+            printf("%s win this Game.\n",name);
             printf("Thank you for playing.");
             return 0;
         }
-        else
-            return 1; 
+        if (arr[i][i]==symbol)
+        {
+            diacount++;
+        }
+        if (arr[i][2-i]==symbol)
+        {
+            dia2count++;
+        }
+        
+    }   
+    if (diacount == 3 || dia2count == 3)
+    {
+        printf("%s win this Game\n",name);
+        printf("Thank you for playing.");
+        return 0;
     }
+    return 1;
 }
 
 
@@ -57,7 +66,8 @@ void print_array(char arr[3][3])
             
         }
         printf("\n");
-        printf("----------\n");
+        if (i<2)
+            printf("----------\n");
     }
     
 }
@@ -76,13 +86,13 @@ int main()
     print_array(arr);
     sp1='X';
     sp2='O';
-    printf("\nSymbol for player one %c\n",sp1);
-    printf("Symbol for player two %c\n",sp2);
+    printf("\nSymbol for player one '%c'\n",sp1);
+    printf("Symbol for player two '%c'\n",sp2);
     do
     {
         if (turn%2 == 0)
         {
-            printf("\n%s it's your turn\n",p1);
+            printf("\n%s it's your turn :-\n",p1);
             printf("Enter your position : ");
             scanf("%d %d",&row,&col);
             turn = set_array(arr, row, col, sp1, turn);
@@ -94,7 +104,7 @@ int main()
         }
         else
         {
-            printf("\n%s it's your turn\n",p2);
+            printf("\n%s it's your turn :-\n",p2);
             printf("Enter your position : ");
             scanf("%d %d",&row,&col);
             turn = set_array(arr, row, col, sp2, turn);
