@@ -1,21 +1,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-int user_no = -1;
+int user_no = 0;
 struct user
 {
     char username[20];
     char password[18];
 }user[10];
-
-void user_register()
+void load_users() 
 {
-    user_no++;
-    FILE *un, *ps;
+    FILE *un = fopen("username.txt", "r");
+    FILE *ps = fopen("password.txt", "r");
     char ch,ch2,arr[10][20],arr2[10][18];
     int col=0;
-    un=fopen("username.txt","a+");
-    ps=fopen("password.txt","a+");
+    user_no = 0;
     while (1)
     {
         ch = fgetc(un);
@@ -53,6 +51,17 @@ void user_register()
             col++;
         } 
     }
+    fclose(un);
+    fclose(ps);
+}
+void user_register()
+{
+    user_no++;
+    FILE *un, *ps;
+    
+    int col=0;
+    un=fopen("username.txt","a");
+    ps=fopen("password.txt","a");
     printf("Enter your username : ");
     scanf("%s",user[user_no].username);
     fprintf(un,"%s",user[user_no].username);
@@ -64,22 +73,25 @@ void user_register()
     fclose(un);
     fclose(ps);
     printf("Registration successful!\n");
+    user_no++;
 }
 void user_login()
 {
+    load_users();
     char username[20],password[18];
     printf("Enter username : ");
     scanf("%s",username);
     printf("Enter password : ");
     scanf("%s",password);
-    if (strcmp(user[user_no].username,username)==0 && strcmp(user[user_no].password,password)==0)
+    for (int i = 0; i < user_no; i++)
     {
-        printf("Login successful! Welcome, %s!\n",username);
+        if (strcmp(user[i].username,username)==0 && strcmp(user[i].password,password)==0)
+        {
+            printf("Login successful! Welcome, %s!\n",username);
+            return;
+        }
     }
-    else
-    {
-        printf("Login failed! Incorrect username or password\n");
-    }
+    printf("Login failed! Incorrect username or password\n");
 }
 int main()
 {
