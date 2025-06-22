@@ -98,7 +98,7 @@ int main()
     int choice;
     while (1)
     {
-        printf("\n1. Register\n2. Login\n3. Exit\nSelect your choice : ");
+        printf("\n1. Register\n2. Login (If you have already register ) \n3. Exit\nSelect your choice : ");
         scanf("%d",&choice);
         switch (choice)
         {
