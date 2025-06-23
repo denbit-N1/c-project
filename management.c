@@ -56,9 +56,7 @@ void load_users()
 }
 void user_register()
 {
-    user_no++;
     FILE *un, *ps;
-    
     int col=0;
     un=fopen("username.txt","a");
     ps=fopen("password.txt","a");
